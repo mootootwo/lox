@@ -11,4 +11,4 @@ I am not a software developer and I have no idea what I am doing.
 [Part-0](https://mootootwo.github.io/lox/part-0) : Setting Up
 
 ## The Game
-https://mootootwo.github.io/lox/index.html
+https://mootootwo.github.io/lox/part-1/index.html
