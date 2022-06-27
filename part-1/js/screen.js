@@ -6,25 +6,30 @@ handles all drawing to canvas
 
 // consider if I can move this stuff out of global scope
 const tileSize = 16;  //tile size in pixels
-const xTiles = 10; // width in default tiles
-const yTiles = 10; // height in default tiles
+const xTiles = 40; // width in default tiles
+const yTiles = 40; // height in default tiles
 
-function loadFont(fontName, fontUrl){
-    let gameFont = new FontFace(fontName, "url("+fontUrl+")");
+var fontName = "Wyse700b"; // TODO: get out of global.. shared between loadfont and setupcanvas
+//var fontUrl = "fonts/Web437_Wyse700b.woff";
 
-    gameFont.load().then(function(font){ //preloads custom font before drawing canvas
+function loadFont(){
+    //let fontName = "Wyse700b"; // had to move to global for now
+    let fontUrl = "fonts/Web437_Wyse700b.woff";
+    let gameFont = new FontFace(fontName, "url("+fontUrl+")");    
+    
+    gameFont.load().then(function(font){
         document.fonts.add(font);
         console.log('Font loaded');
-    
-        draw();
-      
+        setupCanvas();
+        // this works, but it contains a race condition
+        // draw() has dependenies on setupCanvas()
+        // it should be fixed, possibly with serialization
+        draw(); 
+        
     });
 }
 
 function setupCanvas(){
-    let fontName = "Wyse700b";
-    let fontUrl = "fonts/Web437_Wyse700b.woff";    
-
     // does canvas and ctx need to be a global definition?
     // or can i scope them to something more specific?
     // used by drawing functions, how to expose them if scoped locally?
@@ -48,9 +53,6 @@ function setupCanvas(){
 
     ctx.font = tileSize +"px "+fontName;
     ctx.textBaseline = "top";
-
-    loadFont(fontName, fontUrl);
-
 }
 
 function drawChar(char,textColor,x,y){
@@ -65,14 +67,18 @@ function drawChar(char,textColor,x,y){
 
 function draw(){
 
-    //setTimeout(() => { drawChar("0123456789","#ffffff",0,0); }, 500);
+    let playerX = Math.floor(xTiles/2);
+    let playerY = Math.floor(yTiles/2);
+    
+    drawChar("@","#ffffff",playerX,playerY);
+    /*
     for (let i=0; i<10; i++){
         drawChar(i,"#ffffff",0,i)
         for (let j=1; j<10; j++){
             drawChar("\u253c","#ffffff",j,i)
         }
     }
-
+    */
 
 }
 
