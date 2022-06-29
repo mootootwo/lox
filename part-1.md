@@ -15,10 +15,10 @@ Some basic serialized loading functions were setup during this part to allow the
 ### Create Game Loop
 The Python tutorial runs the program only while called in a specific way and exits it cleanly when the window is closed.
 
-I think there are opportunities to create a sort of game loop with loading and ending screens, but the nature of JS JIT execution means 
+I think there are opportunities to create a sort of game loop with loading and ending screens, but I don't see a way to make this relevant to how JS runs in the browser tab.
 
 ### Draw Character
-I changed my little grid test-pattern to be the familiar `@` character and centered it on the canvas
+I changed my little grid test-pattern to be the familiar `@` character and centered it on the canvas.
 
 ### Handle Input
 My input handler is lifted directly from my attempt at Jeremiah Reid's excellent [Broughlike](https://nluqo.github.io/broughlike-tutorial/index.html) tutorial.
@@ -36,7 +36,7 @@ Instead of classes, I set up the actions as functions and called them from the i
 Shamefully, I put my player coordinates into the global scope so that they could be easily manipulated by the action functions.  There is probably a better way of doing this.
 
 #### End Game Loop
-This is a part of the Python tutorial that happens when you close the python window, but 
+This is a part of the Python tutorial that happens when you close the python window, but I don't know of a relevant way to implement similar for a browser tab.  Something to learn later.
 
 ### Add Screen Refresh
 Simple interval timer on screen redraw
