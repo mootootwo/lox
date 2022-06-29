@@ -13,5 +13,5 @@ I am not a software developer and I have no idea what I am doing.
 - [Part-2](https://mootootwo.github.io/lox/part-2) : Generic Entity, render function, and the map. **not complete**
 
 ## The Game
-[Part-0](https://mootootwo.github.io/lox/part-0/)
-[Part-1](https://mootootwo.github.io/lox/part-1/)
+- [Part-0](https://mootootwo.github.io/lox/part-0/)
+- [Part-1](https://mootootwo.github.io/lox/part-1/)
