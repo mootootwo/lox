@@ -6,20 +6,20 @@ orthagonal movement, exit
 */
 
 
-// listens for input
+// listens for input, calls a function based on the input
+// tutorial instucted it to create an object of an Action class type
+// I couldnt figure that out.  Was supposed to:
 // generates a new action object based on a class template
 // returns that object to whatever called the input listener
 function listenInput(){
-    let action = null;
     document.querySelector("html").onkeydown = function(e){
         // handles orthagonal movement and returns dx,dy
-        if(e.key=="w") new MoveAction(0, -1);
-        if(e.key=="s") new MoveAction(0, 1);
-        if(e.key=="a") new MoveAction(-1, 0);
-        if(e.key=="d") new MoveAction(1, 0);
+        if(e.key=="w") moveAction(0, -1);
+        if(e.key=="s") moveAction(0, 1);
+        if(e.key=="a") moveAction(-1, 0);
+        if(e.key=="d") moveAction(1, 0);
 
         // listens for an escape and does nothing yet
-        if(e.key==="Escape") EscapeAction();
+        if(e.key==="Escape") escapeAction();
     };
-    return action;
 }

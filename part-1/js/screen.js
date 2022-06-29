@@ -1,6 +1,12 @@
 /* 
 sets up canvas
 handles all drawing to canvas
+
+there is a whole lot of cruft in here
+I was grasping at a lot of straws trying to 
+disable Chrome's text-on-canvas anti-aliasing
+to no avail.  
+but some of it seemed like best practices worth keeping
 */
 
 
@@ -24,8 +30,8 @@ function renderScreen(){
         // this works, but i think it contains a race condition
         // draw() has dependenies on setupCanvas()
         // it should be fixed, possibly with serialization via promise?
-        setInterval(draw,500); // redraw screen every 16ms 
-        
+        setInterval(draw,16); // redraw screen every 16ms 
+
     });
 
 }
@@ -37,9 +43,10 @@ function setupCanvas(){
     canvas = document.createElement("canvas"); // dynamically create a canvas
 
     ctx = canvas.getContext("2d");
-
-    canvas.width = ((tileSize)*(xTiles));
-    canvas.height = ((tileSize)*(yTiles));
+    let scale = window.devicePixelRatio; // scaling to devicePixelRation should improve crispness
+    
+    canvas.width = Math.floor((tileSize)*(xTiles)*scale);
+    canvas.height = Math.floor((tileSize)*(yTiles)*scale);
     canvas.style.width = canvas.width+"px";
     canvas.style.height = canvas.height+"px";
     canvas.style.outline = "1px solid #ffffff";
@@ -50,14 +57,14 @@ function setupCanvas(){
     canvas.style.left = "50%"; 
     canvas.style.top = "50%"; 
     canvas.style.transform = "translate(-50%, -50%)";
-
  
-
     document.body.appendChild(canvas); // add dynamically created canvas to the html document
 
     ctx.font = tileSize +"px "+fontName;
     ctx.textBaseline = "top";
     ctx.imageSmoothingEnabled = false;
+    ctx.scale(scale, scale); // Normalize coordinate system to use CSS pixels. WTF ever that means.
+    //ctx.translate(0.5,0.5); // improve anti-aliasing blur by shifting rendering by half pixel
 }
 
 function drawChar(char,textColor,x,y){
@@ -67,22 +74,10 @@ function drawChar(char,textColor,x,y){
         x*tileSize,
         y*tileSize
     );
-
 }
 
-// there is a jitter between frames when rendered in chrome
-// not sure what causes this, only visible when screen clearRect() is disabled
-// TODO: troubleshoot and fix
-// did not exist on my previous implementations of this
 function draw(){
-
-    let playerX = Math.floor(xTiles/2);
-    let playerY = Math.floor(yTiles/2);
-
     ctx.clearRect(0,0,canvas.width,canvas.height); //clear screen each frame
     drawChar("@","#ffffff",playerX,playerY);
-    
-
-
 }
 

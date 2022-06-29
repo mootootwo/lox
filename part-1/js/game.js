@@ -8,6 +8,13 @@ even though JS isnt supposed to need one of those..
 I couldn't figure out how to do it otherwise.
 */
 
+
+// stuck these in the global scope
+// so i could manipulate them with moveAction()
+// TODO: learn how to do it better
+playerX = Math.floor(xTiles/2);
+playerY = Math.floor(yTiles/2);
+
 // should this be a self-initiating function?
 function game(){
     /*
@@ -15,36 +22,8 @@ function game(){
     need to add game state control here
     */
     renderScreen();
-    //setupCanvas();
-    //draw(); 
-    //setInterval(draw,16); // redraw screen every 16ms
-    
-    // listens for input..
-    // listenInput();
-
-
-    
-
+    listenInput();
 }
-
-
-// unused.  was original attempt at serialization, 
-// currently replaced by loadFont()
-/*
-function loadGame (){
-    parent.gameState = "loading";
-    setupCanvas();
-    // reading in external data can also go here
-    parent.gameState = "loaded";
-
-
-}
-*/
-
-// TODO
-function gameKill(){
-
-};
 
 
 game();
