@@ -16,7 +16,8 @@ function loadFont(fontName, fontUrl){
         document.fonts.add(font);
         console.log('Font loaded');
     
-        draw();
+        //draw();
+        setInterval(draw,1000); // slow redraw to demonstrate frame jitter
       
     });
 }

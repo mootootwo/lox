@@ -11,14 +11,20 @@ I couldn't figure out how to do it otherwise.
 // should this be a self-initiating function?
 function game(){
     /*
-    moved some serialization into loadFont()
+    moved some serialization into renderScreen()
     need to add game state control here
     */
-    loadFont();
+    renderScreen();
     //setupCanvas();
     //draw(); 
     //setInterval(draw,16); // redraw screen every 16ms
-    //listenInput();
+    
+    // listens for input..
+    // listenInput();
+
+
+    
+
 }
 
 
@@ -39,5 +45,6 @@ function loadGame (){
 function gameKill(){
 
 };
+
 
 game();
