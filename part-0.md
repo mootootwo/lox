@@ -1,6 +1,6 @@
 # r/roguelikedev Roguelike Tutorial 2022
 LOX
-Native Javascript, no dependencies
+Native Javascript, no third party libraries
 
 ##  Part-0
 Part-0 of the [tutorial](https://rogueliketutorials.com/tutorials/tcod/v2/part-0/) sets up the development environment and downloads dependencies.

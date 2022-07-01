@@ -1,6 +1,6 @@
 # r/roguelikedev Roguelike Tutorial 2022
 LOX
-Native Javascript, no dependencies
+Native Javascript, no third party libraries
 
 ##  Part-1
 Part-1 of the [tutorial](https://rogueliketutorials.com/tutorials/tcod/v2/part-1/) sets up the screen, draws to it, builds a basic game loop, and handles input.
