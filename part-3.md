@@ -2,7 +2,7 @@
 LOX
 Native Javascript, no third party libraries
 
-##  Part-2
+##  Part-3
 Part-3 of the [tutorial](https://rogueliketutorials.com/tutorials/tcod/v2/part-3/) .Generating a dungeion
 
 ### Generator
