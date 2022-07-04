@@ -1,0 +1,46 @@
+/* 
+creates the game map
+
+the map is a 2d array, 
+the location in the array 
+is the implicit x,y coords of a tile
+
+tutorial wants the map to be a class...
+not sure, but trying it for now
+*/
+
+class GameMap {
+    constructor(width, height){
+        this.width = width;
+        this.height = height;
+        this.tiles = this.generateMap(this.width, this.height);
+    }
+
+    generateMap(){
+        this.tiles = [];
+        for(let i=0;i<this.width;i++){
+            this.tiles[i] = [];
+            for(let j=0;j<this.height;j++){
+                if(Math.random() < 0.1 || !this.inBounds(i,j)){ //10% walls or border at boundry
+                    this.tiles[i][j] = new Wall(i,j);
+                }else{
+                    this.tiles[i][j] = new Floor(i,j);
+                }
+            }
+        }
+        return this.tiles;
+    }
+
+    inBounds(x,y){ //checks to see if a tile is within the game area
+        return x>0 && y>0 && x<(this.width-1) && y<(this.height-1);
+    }
+
+    draw(){  //draws the map
+        for(let i=0;i<this.width;i++){
+            for(let j=0;j<this.height;j++){
+               this.tiles[i][j].draw();
+            }
+        }
+    }
+
+}
