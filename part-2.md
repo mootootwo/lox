@@ -32,6 +32,8 @@ The Engine also has a lot of problems with things it creates being placed in the
 ### Map class
 Stores tiles that will be rendered to the screen.  I had a lot of trouble with this but it turned out that "map" is a reserved keyword for a constructor in JS.  Everything sorted out when I changed it to gameMap.
 
+Instead of statically coding a small wall in the middle of the map, I added a simple function to generate 10% random noise and stipple the map with scattered walls.
+
 ### Tile class
 Rather than creating these as a top level Class, I have extended these from the generic Entity as they shared all of the same features.
 
