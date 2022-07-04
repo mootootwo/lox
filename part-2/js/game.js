@@ -30,8 +30,7 @@ function game(){
     player = new Actor(playerX, playerY, "@", "#ffffff", false);
     npc = new Actor(playerX+5, playerY, "&", "#ff00ff", false);
     entities = [player, npc];
-    // this is broken, paramaters "not iterable"
-    gameMap = new GameMap(xTiles, yTiles); // TODO: fix
+    gameMap = new GameMap(xTiles, yTiles);
     engine = new Engine(entities);
     
     
