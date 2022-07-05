@@ -20,19 +20,20 @@ class GameMap {
         this.tiles = [];
         for(let i=0;i<this.width;i++){
             this.tiles[i] = [];
-            for(let j=0;j<this.height;j++){
-                if(Math.random() < 0.1 || !this.inBounds(i,j)){ //10% walls or border at boundry
-                    this.tiles[i][j] = new Wall(i,j);
-                }else{
+            for(let j=0;j<this.height;j++){ // fill map with floor tiles
+                // remove placeholder boundary and noise
+                //if(Math.random() < 0.1 || !this.inBounds(i,j)){ //10% walls or border at boundry
+                //    this.tiles[i][j] = new Wall(i,j);
+                //}else{
                     this.tiles[i][j] = new Floor(i,j);
-                }
+                //}
             }
         }
         return this.tiles;
     }
 
     inBounds(x,y){ //checks to see if a tile is within the game area
-        return x>0 && y>0 && x<(this.width-1) && y<(this.height-1);
+        return x>=0 && y>=0 && x<(this.width) && y<(this.height);
     }
 
     draw(){  //draws the map

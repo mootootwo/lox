@@ -33,7 +33,7 @@ class Actor extends Entity{
         // tutorial wants the test for 
         // passable squares to be 
         // moved to engine.js
-        if(gameMap.tiles[this.x+dx][this.y+dy].passable===true) {
+        if( gameMap.inBounds(this.x+dx, this.y+dy) && gameMap.tiles[this.x+dx][this.y+dy].passable===true) {
             this.x += dx;
             this.y += dy;
         };
@@ -53,6 +53,9 @@ class Tile extends Entity{
     }
 }
 
+// not sure why tiles need to be passed coords
+// they should get them implicitly
+// based on their location in the map array
 class Floor extends Tile{
     constructor(x,y){
         super(x, y, "\u2219", "#333333", true, true, true);
