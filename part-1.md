@@ -40,3 +40,5 @@ This is a part of the Python tutorial that happens when you close the python win
 
 ### Add Screen Refresh
 Simple interval timer on screen redraw
+
+## [Demo](https://mootootwo.github.io/lox/part-1/)

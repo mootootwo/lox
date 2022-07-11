@@ -24,3 +24,5 @@ For a local sandbox I am hosting via an IIS server on Win7, because it is distri
 
 ### Dependencies
 Wyse700a font recreated by VilerR and published at [int10h.org](https://int10h.org/oldschool-pc-fonts/) is redistributed with this project.
+
+## [Demo](https://mootootwo.github.io/lox/part-0/)

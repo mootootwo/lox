@@ -30,3 +30,5 @@ I have some gaps between connected modules that I need to fill in with walls aft
 Unused connection ports need to be replaced with docking ports after the station generation is done, so that there are ways into and out of the station.
 
 And obviously I want to build some more interesting and diverse types of station modules, but I think I won't do that during the tutorial.
+
+## [Demo](https://mootootwo.github.io/lox/part-3/)

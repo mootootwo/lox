@@ -42,3 +42,4 @@ I still don't understand how these are working and I'm afraid leaving my kludge 
 
 I've left all input handling in my listenInput() function and am performing reachability tests in the actors' move() instead of in the engine or in the (non-existant) action class.
 
+## [Demo](https://mootootwo.github.io/lox/part-2/)
