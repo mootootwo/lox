@@ -8,33 +8,25 @@ Part-3 of the [tutorial](https://rogueliketutorials.com/tutorials/tcod/v2/part-3
 ### Divergence
 I'm going to start diverging a bit from the tutorial at this point.  Instead of carving out hollow rooms from an otherwise solid map, I'm turning it a bit inside out and making some interconnected solid rectangles on an otherwise hollow map.  
 
-For referefreence, these are the topics the tutorial walks through.  I'll be working on similar analogues to each:
+I tried to keep to similar topics that the tutorial covered, but added some complex problems for myself and 
 
-- Rooms
-- Slices - slices the array to get an inner portion within the perimiter walls
-these pad rooms with a double thick wall so that adjacent rooms don't merge
-- center "property"
-- Tunnels
-- generate_dungeon returns GameMap
-- line of sight library
-- yield / generator
-- check for intersection
-- keep running list of rooms
-- min/max room size
+### My Generator
+This is the start of what I hope will become a little space station generator.  It should create modules as little rectangles the same way the tutorial generator creates rectangular rooms.
 
+Like the tutorial, it keeps a running list of modules. It still checks for enough non-overlapping space before placing a module down.  Additionally, it adds ports to the modules where they may connect to other modules, and keeps a running list of these ports.
 
-### Generator
-list of rooms
-mix/max number of rooms
-min/max size of rooms
-intersection testing
-connections?  
+I think I can improve this somewhat by adding a graph data structure where I track all the connection ports and what they are connected to, or perhaps track the modules and what they are connected to; I haven't quite decided on the correct approach yet.
 
-#### Rectangular module
-wrote a simple class to generate a rectangle.  
+### Still To Do
+There are a few hard-coded things that I put hastily and have not had time to fix yet.  Among them: 
+- The generator does not handle modules well that are not 3 tiles wide.  
+- When getting too close to the map edge, it will correctly truncate a module.  But it will not successfully place the next module at the other end of the station
+- I have some embarassing case-selectors that make assumptions about the orientation of modules based on array index and this will not scale.
 
-#### Merge modules to map
-Moved the map generation to a local variable in the generator, and wrote a function to merge any rectangular modules into the map.  The generator then returns the completed map and it gets rendered as in part-2.
+I will need to add a way to place horizontal modules (connected at right angles instead of in a line) and I have some of the foundation in place to handle this, but some of the hard coded placeholders above will need to be removed with dynamic systems before it is possible.
 
+I have some gaps between connected modules that I need to fill in with walls after generation is complete.
 
-#### Next thing..
+Unused connection ports need to be replaced with docking ports after the station generation is done, so that there are ways into and out of the station.
+
+And obviously I want to build some more interesting and diverse types of station modules, but I think I won't do that during the tutorial.

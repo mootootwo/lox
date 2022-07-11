@@ -36,6 +36,14 @@ class GameMap {
         return x>=0 && y>=0 && x<(this.width) && y<(this.height);
     }
 
+    getTile(x, y){
+        if(this.inBounds(x,y)){
+            return this.tiles[x][y];
+        }else{
+            return new Wall; //downstream tests require a valid constructor type to be returned
+        }
+    }
+
     draw(){  //draws the map
         for(let i=0;i<this.width;i++){
             for(let j=0;j<this.height;j++){

@@ -56,6 +56,8 @@ class Tile extends Entity{
 // not sure why tiles need to be passed coords
 // they should get them implicitly
 // based on their location in the map array
+// TODO: rename to Space
+// TODO: change tile to empty or nbsp, with random chance of being *
 class Floor extends Tile{
     constructor(x,y){
         super(x, y, "\u2219", "#333333", true, true, true);
@@ -63,6 +65,8 @@ class Floor extends Tile{
 
 }
 
+// TODO: rename to Hull
+// TODO: change to solid block and white
 class Wall extends Tile{
     constructor(x,y){
         super(x, y, "\u2592", "#666666", false, false, true);
