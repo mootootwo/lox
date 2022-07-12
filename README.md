@@ -12,7 +12,7 @@ I am not a software developer and I have no idea what I am doing.
 - [Part-1](https://mootootwo.github.io/lox/part-1) : Drawing the ‘@’ symbol and moving it around
 - [Part-2](https://mootootwo.github.io/lox/part-2) : Generic Entity, render function, and the map.
 - [Part-3](https://mootootwo.github.io/lox/part-3) : Map Generation, custom **not complete**
-- [Part-4](https://mootootwo.github.io/lox/part-4) : **not started**
+- [Part-4](https://mootootwo.github.io/lox/part-4) : Field of View **not complete**
 - [Part-5](https://mootootwo.github.io/lox/part-5) : **not started**
 
 ## The Game
@@ -20,3 +20,4 @@ I am not a software developer and I have no idea what I am doing.
 - [Part-1](https://mootootwo.github.io/lox/part-1/)
 - [Part-2](https://mootootwo.github.io/lox/part-2/)
 - [Part-3](https://mootootwo.github.io/lox/part-3/)
+- [Part-4](https://mootootwo.github.io/lox/part-4/)
