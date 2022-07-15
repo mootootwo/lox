@@ -65,12 +65,17 @@ class GameMap {
         }
     }
 
+    // move this to util.js ??
+    distance(x1,y1,x2,y2){ // returns distance between two points.. rounded
+        return Math.round(Math.sqrt(((x2-x1)**2)+((y2-y1)**2))) // distance formula
+    }
+
 
     draw(){  //draws the map
         for(let i=0;i<this.width;i++){
             for(let j=0;j<this.height;j++){
                 this.tiles[i][j].draw();            // draws the tile
-                if (this.visible[i][j]===false){      // checks to see if a tile is in the visible array
+                if (this.visible[i][j]===false){    // checks to see if a tile is in the visible array
                     this.shadow[i][j].shade();      // draws a transparent shader over the tile
                 } 
             }

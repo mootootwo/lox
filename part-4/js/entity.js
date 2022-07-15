@@ -36,6 +36,21 @@ class Actor extends Entity{
         super(x, y, char, r,g,b,a,/*color,*/ passable);
     }
 
+    updateFOV(){
+        let maxDistance = 5;
+
+        // this will process an octant
+        // a 45deg slice of the map radiating from the pov position
+        for (var row = 1; row < maxDistance; row++) {
+            for (var col = 0; col <= row; col++) {
+              var x = this.x + col;
+              var y = this.y - row;
+          
+              station.visible[x][y]=true;
+            }
+          }
+    }
+
     move(dx,dy){
         // tutorial wants the test for 
         // passable squares to be 
@@ -44,6 +59,10 @@ class Actor extends Entity{
             this.x += dx;
             this.y += dy;
         };
+
+        //if(this==player){
+        //    this.updateFOV();
+        //}
     }
 }
 
@@ -91,7 +110,7 @@ class Hull extends Tile{
 // variable alpha layer shader
 class Shadow extends Tile{
     constructor(x,y,a){
-        super(x, y, " ", 0,0,0,a, true, true, true);
+        super(x, y, " ", 100,0,0,a, true, true, true);
     }
     shade(){
         ctx.fillStyle=this.color;

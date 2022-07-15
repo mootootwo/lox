@@ -22,7 +22,8 @@ class MoveAction extends Action {
 */
 
 function moveAction (dx, dy){
-    player.move(dx, dy)
+    player.move(dx, dy);
+    player.updateFOV();
 }
 
 function escapeAction (){

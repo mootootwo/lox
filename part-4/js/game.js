@@ -21,18 +21,18 @@ function game(){
     xTiles = 40;
     yTiles = 40;
 
-    // stuck these in the global scope
-    // so i could manipulate them with moveAction()
-    // TODO: learn how to do it better
-    playerX = Math.floor(xTiles/2);
-    playerY = Math.floor(yTiles/2);
+    let playerX = Math.floor(xTiles/2);
+    let playerY = Math.floor(yTiles/2);
+
+    //gameMap = new GameMap(xTiles, yTiles);
+    gameMap = generateStation(xTiles,yTiles);
 
     // engine wont work if these are locally scoped
     player = new Actor(playerX, playerY, "@", 255,255,255,1,/*"#ffffff",*/ false);
+    player.updateFOV();
     npc = new Actor(playerX+5, playerY, "&", 255,0,255,1,/*"#ff00ff",*/ false);
     entities = [player, npc];
-    //gameMap = new GameMap(xTiles, yTiles);
-    gameMap = generateStation(xTiles,yTiles);
+
     engine = new Engine(entities);
     
     

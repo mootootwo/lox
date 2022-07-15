@@ -14,10 +14,10 @@ orthagonal movement, exit
 function listenInput(){
     document.querySelector("html").onkeydown = function(e){
         // handles orthagonal movement and returns dx,dy
-        if(e.key=="w") player.move(0, -1);
-        if(e.key=="s") player.move(0, 1);
-        if(e.key=="a") player.move(-1, 0);
-        if(e.key=="d") player.move(1, 0);
+        if(e.key=="w") moveAction(0, -1);
+        if(e.key=="s") moveAction(0, 1);
+        if(e.key=="a") moveAction(-1, 0);
+        if(e.key=="d") moveAction(1, 0);
 
         // listens for an escape and does nothing yet
         if(e.key==="Escape") escapeAction();
