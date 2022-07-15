@@ -18,5 +18,9 @@ Part-3 of the [tutorial](https://rogueliketutorials.com/tutorials/tcod/v2/part-4
 
 - will need to add a colour function to be able to tweak RGBA values
 
+###
+tried to draw a shader tile over regualr tiles to manage visibility, but sub-pixel antialiasing makes the underlaying tiles leak at the edges.  invisible tiles are drawn with ghost outlines, and partially visible tiles are drawn with brighter stripes along the edges.
+
+need to adjust the brightness of the tile, so modify the tile draw() function
 
 ## [Demo](https://mootootwo.github.io/lox/part-4/)

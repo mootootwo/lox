@@ -2,6 +2,7 @@
 controls game state
 as of part-1:
 loading - running - killed
+^^it actually does not do this. this is a TODO item
 
 this also seems to be the main entrypoint
 even though JS isnt supposed to need one of those.. 

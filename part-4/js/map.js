@@ -14,26 +14,43 @@ class GameMap {
         this.width = width;
         this.height = height;
         this.tiles = this.generateMap(this.width, this.height);
+        this.visible = this.initVisible(this.width, this.height);
+        this.shadow = this.initShadow(this.width, this.height);
     }
 
-    // this is the LOS approach from the tutorial.. 
-    visible = [];
-    lit = [];
 
     generateMap(){
         this.tiles = [];
+        
         for(let i=0;i<this.width;i++){
             this.tiles[i] = [];
-            for(let j=0;j<this.height;j++){ // fill map with floor tiles
-                // remove placeholder boundary and noise
-                //if(Math.random() < 0.1 || !this.inBounds(i,j)){ //10% walls or border at boundry
-                //    this.tiles[i][j] = new Hull(i,j);
-                //}else{
-                    this.tiles[i][j] = new Space(i,j);
-                //}
+            for(let j=0;j<this.height;j++){         
+                this.tiles[i][j] = new Space(i,j);  // fill map with space tiles
             }
         }
         return this.tiles;
+    }
+
+    initVisible(){
+        this.visible = [];  // this is the LOS approach from the tutorial.. 
+        for(let i=0;i<this.width;i++){
+            this.visible[i] = [];
+            for(let j=0;j<this.height;j++){         
+                this.visible[i][j] = false;         // populate visible array with false
+            }
+        }
+        return this.visible;
+    }
+
+    initShadow(){
+        this.shadow = [];   // little bit off the rails from tutorial here
+        for(let i=0;i<this.width;i++){
+            this.shadow[i] = [];
+            for(let j=0;j<this.height;j++){         
+                this.shadow[i][j] = new Shadow(i,j,0.5);   // default alpha layer full opacity
+            }
+        }
+        return this.shadow;
     }
 
     inBounds(x,y){ //checks to see if a tile is within the game area
@@ -52,9 +69,12 @@ class GameMap {
     draw(){  //draws the map
         for(let i=0;i<this.width;i++){
             for(let j=0;j<this.height;j++){
-               this.tiles[i][j].draw();
+                this.tiles[i][j].draw();            // draws the tile
+                if (this.visible[i][j]===false){      // checks to see if a tile is in the visible array
+                    this.shadow[i][j].shade();      // draws a transparent shader over the tile
+                } 
             }
         }
     }
-
+ 
 }

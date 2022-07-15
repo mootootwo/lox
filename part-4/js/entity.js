@@ -9,18 +9,19 @@ class Entity{
         this.x = x;
         this.y = y;
         this.char = char;
-        this.color = this.concatRGBA(r,g,b,a);
+        this.s = 1; // experimental shader, multiplies rgb values
+        this.color = this.concatRGBA(r,g,b,a,this.s);
         this.passable = passable;
 	}
 
     // not sure this should live here..
     // works for now
-    concatRGBA(r,g,b,a){
-        return "rgba("+r+","+g+","+b+","+a+")";
+    concatRGBA(r,g,b,a,s){
+        return "rgba("+Math.floor(r*s)+","+Math.floor(g*s)+","+Math.floor(b*s)+","+a+")";
     }
 
     draw(){
-        drawChar(this.char,this.color,this.x,this.y);
+        drawChar(this.char, this.color, this.x,this.y);
     }
 }
 
@@ -62,7 +63,7 @@ class Tile extends Entity{
 
 class Space extends Tile{
     constructor(x,y){
-        super(x, y, null, 51,51,51,1,/*"#333333",*/ true, true, true);
+        super(x, y, null, 51,51,51,1,/*"#333333",*/ true, true, false);
         this.char = this.decorate();
     }
     decorate(){ // usually blank but with a chance of having a star
@@ -83,8 +84,17 @@ class Void extends Tile{
 // TODO: change to solid block and white
 class Hull extends Tile{
     constructor(x,y){
-        super(x, y, "\u2592", 102,102,102,1,/*"#666666",*/ false, false, true);
+        super(x, y, "\u2592",/*"\u2588",*/ 255,255,255,1,/* 102,102,102,1,*//*"#666666",*/ false, false, true);
     }
-
 }
 
+// variable alpha layer shader
+class Shadow extends Tile{
+    constructor(x,y,a){
+        super(x, y, " ", 0,0,0,a, true, true, true);
+    }
+    shade(){
+        ctx.fillStyle=this.color;
+        ctx.fillRect(this.x*tileSize,this.y*tileSize,tileSize, tileSize);
+    }
+}
