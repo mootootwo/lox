@@ -35,9 +35,12 @@ function game(){
 
     engine = new Engine(entities);
     
+    async function render() { 
+        await setupScreen();            // this loads font, sets up canvas and contex.  async function
+        setInterval(engine.render,16);  // update screen every 16ms
+    };
+    render();                           // call async function set
     
-    renderScreen(); // this loads font, sets up canvas and contex
-    setInterval(engine.render,16);
     engine.events();
     
 }

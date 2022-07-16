@@ -18,17 +18,17 @@ const yScreen = 40; // height in default tiles
 var fontName = "Wyse700b"; // TODO: get out of global.. shared between loadfont and setupcanvas
 //var fontUrl = "fonts/Web437_Wyse700b.woff";
 
-function renderScreen(){
+async function setupScreen(){  
     //let fontName = "Wyse700b"; // had to move to global for now
     let fontUrl = "fonts/Web437_Wyse700b.woff";
     let gameFont = new FontFace(fontName, "url("+fontUrl+")");    
     
-    gameFont.load().then(function(font){
+    gameFont.load().then(function(font){ // TODO: review / fix chained promises
         document.fonts.add(font);
         console.log('Font loaded');
         setupCanvas();
     });
-
+    return;                             // this is needed for the async function
 }
 
 function setupCanvas(){

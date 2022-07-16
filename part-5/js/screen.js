@@ -15,10 +15,10 @@ const tileSize = 16;  //tile size in pixels
 const xScreen = 40; // width in default tiles
 const yScreen = 40; // height in default tiles
 
-var fontName = "Wyse700b"; // TODO: get out of global.. shared between renderScreen() and setupCanvas()
+var fontName = "Wyse700b"; // TODO: get out of global.. shared between setupScreen() and setupCanvas()
 //var fontUrl = "fonts/Web437_Wyse700b.woff";
 
-function renderScreen(){
+async function setupScreen(){  
     //let fontName = "Wyse700b"; // had to move to global for now
     let fontUrl = "fonts/Web437_Wyse700b.woff";
     let gameFont = new FontFace(fontName, "url("+fontUrl+")");    
@@ -28,7 +28,7 @@ function renderScreen(){
         console.log('Font loaded');
         setupCanvas();
     });
-
+    return;                             // this is needed for the async function
 }
 
 function setupCanvas(){
