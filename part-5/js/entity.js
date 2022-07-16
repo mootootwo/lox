@@ -53,7 +53,7 @@ class Actor extends Entity{
 
         // go through the fov array and make previously seen things invisible
         for (let i=that.fov.length-1;i>=0;i--){
-            station.visible[that.fov[i].x][that.fov[i].y]=false;
+            gameMap.visible[that.fov[i].x][that.fov[i].y]=false;
             that.fov.pop();
         };
         
@@ -68,13 +68,15 @@ class Actor extends Entity{
                     var x = that.x + col;
                     var y = that.y - row;
                 
-                    station.visible[x][y]=true;
+                    if (gameMap.inBounds(x,y)){
+                        gameMap.visible[x][y]=true;
                     
-                    // add visible tiles to current 
-                    // fov for easy cleanup
-                    that.fov.push({
-                        "x":x,
-                        "y":y})
+                        // add visible tiles to current 
+                        // fov for easy cleanup
+                        that.fov.push({
+                            "x":x,
+                            "y":y})
+                    }
                 }
             }
         }

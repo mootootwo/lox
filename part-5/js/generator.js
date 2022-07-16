@@ -11,9 +11,9 @@ map.js is used to put these features on the grid
 // will have connection ports on the ends
 // to join up with other modules
 class RectModule{
-	constructor(width, height/*, portList*/){
+	constructor(width, length/*, portList*/){
         this.width = width;
-        this.height = height;
+        this.length = length;
         // only need to know parent port for generation, 
         // don't need to save it with the module
         // TODO: fix
@@ -21,7 +21,7 @@ class RectModule{
         this.x1 = this.findX1();
         this.y1 = this.findY1();
         this.x2 = this.x1+width-1;
-        this.y2 = this.y1+height-1;
+        this.y2 = this.y1+length-1;
         this.ports = this.generatePorts();
         //this.portList = portList; // made this global because passing it wasnt working
     }
@@ -60,14 +60,14 @@ class RectModule{
                     this.y1=py+pdy-1;
                     break;
                 case -1: // top facing port
-                    this.y1=py+pdy-this.height;
+                    this.y1=py+pdy-this.length;
                     break;
                 case 1: // bottom facing port
                     this.y1=py+pdy+1;
                     break;
             }
         }else { // centers on map if no parent exists
-            this.y1 = Math.floor((yTiles-this.height)/2);
+            this.y1 = Math.floor((yTiles-this.length)/2);
         }
         return this.y1;
     }
@@ -98,7 +98,7 @@ class RectModule{
             modules[pPort.module].ports[pPort.port].dx, 
             modules[pPort.module].ports[pPort.port].dy,
             this.width,
-            this.height,
+            this.length,
             station
         )
         
@@ -116,8 +116,8 @@ class RectModule{
             // after failure it is placing modules at the default centerpoint
             // is failing to pick a new port
             return this.pickParentPort(); // recurse and try again
-        } else if (n<=this.height){ // enough or too little space for chosen length
-            this.height = n;        // if < width, truncate width
+        } else if (n<=this.length){ // enough or too little space for chosen length
+            this.length = n;        // if < width, truncate width
             portList.splice(i,1) // splice port out of available list
             return pPort;
         } else { 
@@ -253,7 +253,7 @@ class DockingPort extends Entity{
 // returns how much space is available to build a module
 // TODO: allow for variable / configurable padding
 // eg: change ceil to floor, add a +n padding distance
-function measureEmpty(x,y,dx,dy,width,height,map){
+function measureEmpty(x,y,dx,dy,width,length,map){
     let x1 = x + dx - Math.ceil(0.5*width); // ceil: one tile padding to left
     let x2 = x + dx + Math.ceil(0.5*width); // ceil: one tile padding to right
     let y1 = y + dy;
@@ -269,7 +269,7 @@ function measureEmpty(x,y,dx,dy,width,height,map){
         case 0: // top or bottom facing port
         switch (dy){
             case -1: // top facing
-                for(j=y1;j>=y1-(height+1);j--){ // one tile padding to y
+                for(j=y1;j>=y1-(length+1);j--){ // one tile padding to y
                     for(let i=x1;i<=x2;i++){
                         if (map.getTile(i,j).constructor.name !== "Space"){
                         //if (map.tiles[i][j].constructor.name !== "Space"){
@@ -280,7 +280,7 @@ function measureEmpty(x,y,dx,dy,width,height,map){
                 return y1-j;
                 break;
             case 1: // bottom facing
-                for(j=y1;j<=y1+height+1;j++){ // one tile padding to y
+                for(j=y1;j<=y1+length+1;j++){ // one tile padding to y
                     for(let i=x1;i<=x2;i++){
                         if (map.getTile(i,j).constructor.name !== "Space"){
                         //if (map.tiles[i][j].constructor.name !== "Space"){
@@ -294,7 +294,7 @@ function measureEmpty(x,y,dx,dy,width,height,map){
         }
         case -1: // left facing port
             // not sure how I'm going to transform horizontal modules, 
-            // might rotate vertical modules such that height is x so they keep 
+            // might rotate vertical modules such that length is x so they keep 
             // universal length/width paramaters
             // or might make a different horizontal module class
             return 0; // placeholder to disable horizontal module attempts
@@ -348,7 +348,7 @@ function generateStation(mapWidth, mapHeight){
     for(let i=0;i<maxModules;i++){
         modules[i] = new RectModule(
             randomRange(minModX, maxModX), // random width 
-            randomRange(minModY, maxModY), // random height
+            randomRange(minModY, maxModY), // random length
             // portList // dont need this because I made it global
         );
         mergeModule(station,modules[i]);
