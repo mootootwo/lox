@@ -13,7 +13,7 @@ I am not a software developer and I have no idea what I am doing.
 - [Part-2](https://mootootwo.github.io/lox/part-2) : Generic Entity, render function, and the map.
 - [Part-3](https://mootootwo.github.io/lox/part-3) : Map Generation, custom **not complete**
 - [Part-4](https://mootootwo.github.io/lox/part-4) : Field of View **not complete**
-- [Part-5](https://mootootwo.github.io/lox/part-5) : **not started**
+- [Part-5](https://mootootwo.github.io/lox/part-5) : Placing and bumping actiors **not complete**
 
 ## The Game
 - [Part-0](https://mootootwo.github.io/lox/part-0/)
@@ -21,3 +21,4 @@ I am not a software developer and I have no idea what I am doing.
 - [Part-2](https://mootootwo.github.io/lox/part-2/)
 - [Part-3](https://mootootwo.github.io/lox/part-3/)
 - [Part-4](https://mootootwo.github.io/lox/part-4/)
+- [Part-5](https://mootootwo.github.io/lox/part-5/)

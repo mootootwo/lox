@@ -3,7 +3,7 @@ LOX
 Native Javascript, no third party libraries
 
 ##  Part-4
-Part-3 of the [tutorial](https://rogueliketutorials.com/tutorials/tcod/v2/part-4/) .  Filed of View.
+Part-4 of the [tutorial](https://rogueliketutorials.com/tutorials/tcod/v2/part-4/) .  Filed of View.
 
 ### More Divergence
 The tutorial specifies Explored and Visible as seperate things to track, and uses differnt tiles to draw each condition.  Instead I am only handling Visibility and doing it with a semi-transparent shader layer instead of changing the tile or color.
