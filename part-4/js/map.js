@@ -31,6 +31,8 @@ class GameMap {
         return this.tiles;
     }
 
+    // all tiles in visibile array default to false
+    // visible[] and shadow[] could probably be one thing?
     initVisible(){
         this.visible = [];  // this is the LOS approach from the tutorial.. 
         for(let i=0;i<this.width;i++){
@@ -42,12 +44,14 @@ class GameMap {
         return this.visible;
     }
 
+    // all tiles in the shadow array default to having a shader
+    // visible[] and shadow[] could probably be one thing?
     initShadow(){
         this.shadow = [];   // little bit off the rails from tutorial here
         for(let i=0;i<this.width;i++){
             this.shadow[i] = [];
             for(let j=0;j<this.height;j++){         
-                this.shadow[i][j] = new Shadow(i,j,0.5);   // default alpha layer full opacity
+                this.shadow[i][j] = new Shadow(i,j,0.5);   // default alpha layer half opacity
             }
         }
         return this.shadow;
@@ -57,7 +61,7 @@ class GameMap {
         return x>=0 && y>=0 && x<(this.width) && y<(this.height);
     }
 
-    getTile(x, y){
+    getTile(x, y){ // returns the map tile found at some coords
         if(this.inBounds(x,y)){
             return this.tiles[x][y];
         }else{
@@ -73,7 +77,7 @@ class GameMap {
             for(let j=0;j<this.height;j++){
                 this.tiles[i][j].draw();            // draws the tile
                 if (this.visible[i][j]===false){    // checks to see if a tile is in the visible array
-                    this.shadow[i][j].shade();      // draws a transparent shader over the tile
+                    this.shadow[i][j].shade(station);      // draws a transparent shader over the tile
                 } 
             }
         }

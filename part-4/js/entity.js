@@ -59,8 +59,11 @@ class Actor extends Entity{
         
         // this will process an quadrant
         // a 90deg slice of the map radiating from the pov position
+        // row and col being seperate from x y should
+        // allow this to be changed to an octant implementation later
         function updateQuad(dr,dc){
             for (let row = 0; Math.abs(row) <= maxDistance; row=row+dr) {
+                // using distance formula here makes this a circle instead of a square
                 for (let col = 0; distance(0,0,row,col) <= maxDistance; col=col+dc) {
                     var x = that.x + col;
                     var y = that.y - row;
@@ -77,6 +80,7 @@ class Actor extends Entity{
         }
         
         // for each quadrant, process with transformed row and column
+        // changing this to octants will require being able to transpose row&col
         for (let quad=0; quad<8; quad++){
             switch (quad){
                 case 0: 
@@ -145,6 +149,8 @@ class Void extends Tile{
 }
 
 // TODO: change to solid block and white
+// solid block/white has major antialiasing issues..
+// hard on eyes until pixel-perfect rendering is implemented somehow
 class Hull extends Tile{
     constructor(x,y){
         super(x, y, "\u2592",/*"\u2588",*/ 255,255,255,1,/* 102,102,102,1,*//*"#666666",*/ false, false, true);
@@ -156,8 +162,25 @@ class Shadow extends Tile{
     constructor(x,y,a){
         super(x, y, " ", 100,0,0,a, true, true, true);
     }
-    shade(){
-        ctx.fillStyle=this.color;
-        ctx.fillRect(this.x*tileSize,this.y*tileSize,tileSize, tileSize);
+
+    // runs every frame like draw() except for overlay
+    shade(map){
+        if (map.tiles[this.x][this.y].constructor.name!="Space"){ //maybe should use getTile() here instead?
+            ctx.fillStyle=this.color;
+            ctx.fillRect(this.x*tileSize,this.y*tileSize,tileSize, tileSize);
+        }
     }
 }
+
+/*  shader gradient falloff thing
+
+            // placeholder maxDistance and fillStyle
+            // this section probably needs to live somewhere else
+            // attempting gradiant dropoff based on distance
+            let maxDistance = 7;
+            let n=distance(player.x, player.y, this.x, this.y);
+            if (n<=maxDistance && n > maxDistance*0.75){
+                ctx.fillStyle="rgba(100,0,0,0.4)";
+                ctx.fillRect(this.x*tileSize,this.y*tileSize,tileSize, tileSize);
+            }
+*/
