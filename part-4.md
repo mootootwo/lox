@@ -30,7 +30,7 @@ Somehow I thought field of view calculations would be simple.  I could imagine a
 
 Finally, I lucked upon Bob Nystrom's [article](https://journal.stuffwithstuff.com/2015/09/07/what-the-hero-sees/) that explained how to do it in terms that even I could understand.
 
-I haven't implemented it yet, but I'm throwing it on the backlog of stuff to get back to.
+I still don't quite grasp why the examples are in octants rather than quadrants, so I've implemented a quadrant version of Bob's solution except without recursion and without shadowcasting, haha.  I am updating a shader layer as I radiate outward though, so I hope that actual shadow casting can be added later without too much fuss.
 
 ### Game loop still not done
 This is where not previously having a game loop has really bit me.

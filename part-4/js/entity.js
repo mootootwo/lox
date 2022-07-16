@@ -34,21 +34,65 @@ class Entity{
 class Actor extends Entity{
     constructor(x, y, char, r,g,b,a,/*color,*/ passable){
         super(x, y, char, r,g,b,a,/*color,*/ passable);
+        this.fov=[];    // last known field of view
+                        // feel dumb tracking this per actor.. 
+                        // maybe only need one for player or global
     }
+    
 
+    // i feel like I should be doing the FOV update 
+    // on the map instead of on the actor
     updateFOV(){
         let maxDistance = 5;
+        let that=this; // bullshit context dropping crap
+                       // learn to use "factory functions"
+                       // which should avoid this shit
+                       // or learn how arrow functions work
+        let row = 0;
+        let col = 0;
 
-        // this will process an octant
-        // a 45deg slice of the map radiating from the pov position
-        for (var row = 1; row < maxDistance; row++) {
-            for (var col = 0; col <= row; col++) {
-              var x = this.x + col;
-              var y = this.y - row;
-          
-              station.visible[x][y]=true;
+        // go through the fov array and make previously seen things invisible
+        for (let i=that.fov.length-1;i>=0;i--){
+            station.visible[that.fov[i].x][that.fov[i].y]=false;
+            that.fov.pop();
+        };
+        
+        // this will process an quadrant
+        // a 90deg slice of the map radiating from the pov position
+        function updateQuad(dr,dc){
+            for (let row = 0; Math.abs(row) <= maxDistance; row=row+dr) {
+                for (let col = 0; distance(0,0,row,col) <= maxDistance; col=col+dc) {
+                    var x = that.x + col;
+                    var y = that.y - row;
+                
+                    station.visible[x][y]=true;
+                    
+                    // add visible tiles to current 
+                    // fov for easy cleanup
+                    that.fov.push({
+                        "x":x,
+                        "y":y})
+                }
             }
-          }
+        }
+        
+        // for each quadrant, process with transformed row and column
+        for (let quad=0; quad<8; quad++){
+            switch (quad){
+                case 0: 
+                    updateQuad( 1, -1);
+                    break;
+                case 1: 
+                    updateQuad( 1, 1);
+                    break;
+                case 2: 
+                    updateQuad( -1,  1);
+                    break;
+                case 3: 
+                    updateQuad( -1,  -1);
+                    break;
+            }
+        }
     }
 
     move(dx,dy){

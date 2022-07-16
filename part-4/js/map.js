@@ -65,10 +65,7 @@ class GameMap {
         }
     }
 
-    // move this to util.js ??
-    distance(x1,y1,x2,y2){ // returns distance between two points.. rounded
-        return Math.round(Math.sqrt(((x2-x1)**2)+((y2-y1)**2))) // distance formula
-    }
+
 
 
     draw(){  //draws the map
