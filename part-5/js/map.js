@@ -69,6 +69,19 @@ class GameMap {
         }
     }
 
+    // returns a clear Space tile
+    getRandomClearTile(){
+        let x=randomRange(0,this.width);
+        let y=randomRange(0,this.height);
+        
+        if (this.getTile(x,y).constructor.name==="Space"){return this.tiles[x][y];} // i feel like there is a redundant lookup in this statement that i could improve
+        else{return this.getRandomClearTile()};
+
+        // TODO:
+        // need to add test for non-tile entites at this location
+        // need to add test for docking port danger zone at this location
+    }
+
 
 
 
