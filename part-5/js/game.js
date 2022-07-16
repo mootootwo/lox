@@ -21,16 +21,17 @@ function game(){
     xTiles = 40;
     yTiles = 40;
 
-    let playerX = Math.floor(xTiles/2);
-    let playerY = Math.floor(yTiles/2);
+    //let playerX = Math.floor(xTiles/2);
+    //let playerY = Math.floor(yTiles/2);
 
     //gameMap = new GameMap(xTiles, yTiles);
     gameMap = generateStation(xTiles,yTiles);
 
     // engine wont work if these are locally scoped
-    player = new Actor(playerX, playerY, "@", 255,255,255,1,/*"#ffffff",*/ false);
+    let playerStart = gameMap.getRandomClearTile();
+    player = new Actor(playerStart.x, playerStart.y, "@", 255,255,255,1,/*"#ffffff",*/ false);
     player.updateFOV();
-    npc = new Actor(playerX+5, playerY, "&", 255,0,255,1,/*"#ff00ff",*/ false);
+    npc = new Actor(player.x+5, player.y+5, "&", 255,0,255,1,/*"#ff00ff",*/ false);
     entities = [player, npc];
 
     engine = new Engine(entities);

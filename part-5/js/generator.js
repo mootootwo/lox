@@ -115,7 +115,7 @@ class RectModule{
             // this recursion isnt working
             // after failure it is placing modules at the default centerpoint
             // is failing to pick a new port
-            this.pickParentPort(); // recurse and try again
+            return this.pickParentPort(); // recurse and try again
         } else if (n<=this.height){ // enough or too little space for chosen length
             this.height = n;        // if < width, truncate width
             portList.splice(i,1) // splice port out of available list
