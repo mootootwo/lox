@@ -113,12 +113,7 @@ class RectModule{
             );
             portList.splice(i,1);            // splice port out of available list
             return this.pickParentPort();   // recurse and try again
-        
-        // TODO: fix this
-        // somethings fucked around this area I think
-        // building modules too close to the bottom map edge
-        // measurement unit tests all look good in console
-        // probably issue with module size truncation
+    
         } else if (n<=this.length+2){       // too little space for chosen length
             this.length = n-2;              // if < length+padding, truncate length
             this.y2 = this.y1+length-1;     // update y2.. may not survive transforms??
