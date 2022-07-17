@@ -111,7 +111,11 @@ class RectModule{
                 modules[pPort.module].ports[pPort.port].dx, 
                 modules[pPort.module].ports[pPort.port].dy 
             );
-            portList.splice(i,1);            // splice port out of available list
+            dockList.push({                     // adds new docking port to dockList[]
+                "module":pPort.module, 
+                "port":pPort.port
+            });
+            portList.splice(i,1);           // splice connection port out of available list
             return this.pickParentPort();   // recurse and try again
     
         } else if (n<=this.length+2){       // too little space for chosen length
@@ -126,7 +130,8 @@ class RectModule{
     }
 
     // not currently used
-    randomAvailablePort(){ // can remove if else from this, if test exists in pickParentPort()
+    // TODO: convert this for use finding docking port
+    randomAvailablePort(){ 
         if (portList.length>0){
             return portList[randomRange(0,portList.length-1)];
         }else {return null;}
@@ -154,23 +159,68 @@ class RectModule{
         // TODO: consider making connection opening direction 
         // dynamic rather than prescriptive
         this.ports[0] = new ConnectionPort(
-            Math.ceil((this.x2-this.x1)/2+this.x1), // horizontal midpoint
+            Math.ceil((this.x2-this.x1)/2+this.x1), // width midpoint
+            //Math.ceil((this.width)/2+this.x1), // width midpoint
             this.y1, // top
             0, // direction: no change x
             -1,  // direction: up 1
             null // placeholder v value for parent link
         );
+        /*
+        portList.push({ // adds this port to portList
+            // module.length is kludge TODO: do better
+            "module":modules.length, // what module number is this part of
+            "port":0, // lazy hardcoded
+        });
+        */
         this.ports[1] = new ConnectionPort(
-            Math.ceil((this.x2-this.x1)/2+this.x1), // horizontal midpoint
+            Math.ceil((this.x2-this.x1)/2+this.x1), // width midpoint
+            //Math.ceil((this.width)/2+this.x1), // width midpoint
             this.y2, // bottom
             0, // direction: no change x
             1, // direction: down 1
             null // placeholder v value for parent link
         );
-            
-        // needs something to maybe add connection points to the sides
+        /*
+        portList.push({ // adds this port to portList
+            // module.length is kludge TODO: do better
+            "module":modules.length, // what module number is this part of
+            "port":1, // lazy hardcoded
+        });
+        */
         
+        // trying something to add connection points to the sides of some modules
+        if (this.length % 2 != 0 ){
+            this.ports[2] = new ConnectionPort(
+                this.x1, // left
+                Math.ceil((this.y2-this.y1)/2+this.y1), // length midpoint
+                -1, // direction: left
+                0, // direction: no change y
+                null // placeholder v value for parent link
+            );
+            portList.push({ // adds this port to portList
+                // module.length is kludge TODO: do better
+                "module":modules.length, // what module number is this part of
+                "port":2, // lazy hardcoded
+            });
         
+            this.ports[3] = new ConnectionPort(
+                this.x2, // left
+                Math.ceil((this.y2-this.y1)/2+this.y1), // length midpoint             
+                1, // direction: right
+                0, // direction: no change y
+                null // placeholder v value for parent link
+            );
+            portList.push({ // adds this port to portList
+                // module.length is kludge TODO: do better
+                "module":modules.length, // what module number is this part of
+                "port":3, // lazy hardcoded
+            });
+        
+        }
+        
+
+
         // update parent port to add v-value for local port
         // update local port to add v-value for parent port
         // updates list of all ports to include new unconnected ports
@@ -179,6 +229,10 @@ class RectModule{
         // case statement contains hard coded scenarios
         // not modular/functional
         // will not scale or extend
+        // TODO:
+        // updaing port list based on parent port detection is incompatable
+        // with updaing port list based on port creation.. 
+        // need a non-prescriptive method of doing one or the other
         if (this.parentPort){ 
             switch (this.parentPort.port){ // hardcoded assumptions TODO: improve
                 case 0: // assumes 0 is top port
@@ -190,11 +244,14 @@ class RectModule{
                         "module":this.parentPort.module, 
                         "port":this.parentPort.port, 
                     };
+                    
                     portList.push({ // adds other (nonconnected) port to portList
                         // module.length is kludge TODO: do better
                         "module":modules.length, // what module number is this part of
                         "port":0, 
                     });
+                    
+                    //portList.splice(i,1);            // splice port out of available list
                     break;
                 case 1: // assumes 1 is bottom port
                     modules[this.parentPort.module].ports[this.parentPort.port].v={  // add vertex information to parent
@@ -205,15 +262,18 @@ class RectModule{
                         "module":this.parentPort.module, 
                         "port":this.parentPort.port,  
                     };
+                    
                     portList.push({ // adds other (nonconnected) port to portList
                         // module.length is kludge TODO: do better
                         "module":modules.length, // what module number is this part of
                         "port":1, 
                     });
+                    
+                    //portList.splice(i,1);            // splice port out of available list
                     break;
             }
         }else{ // should only trigger this for first module
-            for (let i=0;i<this.ports.length;i++){
+            for (let i=0;i<2/*this.ports.length*/;i++){  // only push 0 and 1, others are weird exceptions
                 portList.push({
                     // module.length is kludge TODO: do better
                     "module":modules.length, // what module number is this part of
@@ -228,7 +288,7 @@ class RectModule{
 // this is a connection point between two station modules
 class ConnectionPort extends Entity{
     constructor(x,y,dx,dy,v){
-        super(x, y, "\u2261", 255,255,255,1,/*"#666666",*/ false, false, true);
+        super(x, y, "\u2592",/*"\u2261",*/ 255,255,255,1,/*"#666666",*/ false, false, true);
         this.x = x;
         this.y = y;
         this.dx = dx; // the direction the port opens in
@@ -275,6 +335,7 @@ function measureEmpty(x,y,dx,dy,width,length,map){
         return measure(y1,x1,dy,1);       // for dy==1¦¦dy==-1
 
     }else{                          // right or left facing port
+        return 0;                   // disable horizontal placement
         return measure(x1,y1,dx,1);       // for dx==1¦¦dx==-1
                                     // this isnt actually going to work
                                     // TODO: solve transform for horizontal modules
@@ -321,7 +382,11 @@ function generateStation(mapWidth, mapHeight){
 
     // couldnt figure out how to pass this, had to make it global :(
     // TODO: fix
-    portList = [];  //track all ports, availability, and what they are connected to
+    portList = [];  // track all connection ports, 
+                    // was going to track availability and what they are connected to
+                    // but availability became an implicit property of being on the list
+
+    dockList = [];  // track all docking ports
 
     for(let i=0;i<maxModules;i++){
         modules[i] = new RectModule(
@@ -331,15 +396,36 @@ function generateStation(mapWidth, mapHeight){
         );
         mergeModule(station,modules[i]);
     }
-    // merge the connection ports
+    
+    
+    // change remaining disconnected ports to docking ports
+    for(let i=0;i<portList.length;){        // dont need i++ because portlist gets shorter each round
+        modules[portList[i].module].ports[portList[i].port] = new DockingPort( // convert to docking port
+            modules[portList[i].module].ports[portList[i].port].x, 
+            modules[portList[i].module].ports[portList[i].port].y, 
+            modules[portList[i].module].ports[portList[i].port].dx, 
+            modules[portList[i].module].ports[portList[i].port].dy 
+        );
+        dockList.push({                     // adds new docking port to dockList[]
+            "module":portList[i].module, 
+            "port":portList[i].port
+        });
+        portList.splice(i,1)            // splice port out of available list
+    };
     // some kludgey shit, TODO: cleanup
+    // merge the connection ports
     for(let i=0;i<maxModules;i++){
         for(let j=0;j<modules[i].ports.length;j++){
             station.tiles[modules[i].ports[j].x][modules[i].ports[j].y] = modules[i].ports[j];
-            // TODO: need to place hull between modules at connected connection ports
-            // TODO: need to change disconnected ports to docking ports    
+            // place hull between modules at connected connection ports
+            if (modules[i].ports[j].constructor.name==="ConnectionPort"){
+                station.tiles[modules[i].ports[j].x+modules[i].ports[j].dx]
+                             [modules[i].ports[j].y+modules[i].ports[j].dy] 
+                   = new Hull(modules[i].ports[j].x+modules[i].ports[j].dx,
+                              modules[i].ports[j].y+modules[i].ports[j].dy);  
+            }             
         }
-    }
+    };
 
     return station;
 }
