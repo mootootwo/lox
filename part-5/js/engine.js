@@ -20,7 +20,7 @@ class Engine {
 
     // not totally convinced moving this out of 
     // draw() from screen.js is a good idea
-    async render(){
+    render(){
         ctx.clearRect(0,0,canvas.width,canvas.height); // clear screen each frame
         gameMap.draw();
         for (let i = 0; i < this.entities.length; i++){ // draws each entity

@@ -26,12 +26,12 @@ async function setupScreen(){
     gameFont.load().then(function(font){ // TODO: review / fix chained promises
         document.fonts.add(font);
         console.log('Font loaded');
-        setupCanvas();
+        return;                             // this is needed for the async function
     });
-    return;                             // this is needed for the async function
 }
 
-function setupCanvas(){
+async function setupCanvas(){
+    await setupScreen();
     // does canvas and ctx need to be a global definition?
     // or can i scope them to something more specific?
     // used by drawing functions, how to expose them if scoped locally?
@@ -60,6 +60,8 @@ function setupCanvas(){
     ctx.imageSmoothingEnabled = false;
     ctx.scale(scale, scale); // Normalize coordinate system to use CSS pixels. WTF ever that means.
     //ctx.translate(0.5,0.5); // improve anti-aliasing blur by shifting rendering by half pixel
+
+    return;
 }
 
 function drawChar(char,textColor,x,y){
