@@ -102,26 +102,30 @@ class RectModule{
             station
         )
         
-        if (n<3){ // not enough space to place a module
+        if (n<3+2){ // not enough space to place a module
+                    // min lenth is 3, padding 1 on either side
+                    // TODO: remove hard coded paramaters
             modules[pPort.module].ports[pPort.port] = new DockingPort( // convert to docking port
                 modules[pPort.module].ports[pPort.port].x, 
                 modules[pPort.module].ports[pPort.port].y, 
                 modules[pPort.module].ports[pPort.port].dx, 
                 modules[pPort.module].ports[pPort.port].dy 
             );
-            portList.splice(i,1) // splice port out of available list
-            
-            // TODO: FIX THIS
-            // this recursion isnt working
-            // after failure it is placing modules at the default centerpoint
-            // is failing to pick a new port
-            return this.pickParentPort(); // recurse and try again
-        } else if (n<=this.length){ // enough or too little space for chosen length
-            this.length = n;        // if < width, truncate width
-            portList.splice(i,1) // splice port out of available list
+            portList.splice(i,1);            // splice port out of available list
+            return this.pickParentPort();   // recurse and try again
+        
+        // TODO: fix this
+        // somethings fucked around this area I think
+        // building modules too close to the bottom map edge
+        // measurement unit tests all look good in console
+        // probably issue with module size truncation
+        } else if (n<=this.length+2){       // too little space for chosen length
+            this.length = n-2;              // if < length+padding, truncate length
+            this.y2 = this.y1+length-1;     // update y2.. may not survive transforms??
+            portList.splice(i,1);            // splice port out of available list
             return pPort;
         } else { 
-            portList.splice(i,1) // splice port out of available list
+            portList.splice(i,1);            // splice port out of available list
             return pPort;
         }
     }
@@ -251,61 +255,38 @@ class DockingPort extends Entity{
 
 
 // returns how much space is available to build a module
-// TODO: allow for variable / configurable padding
-// eg: change ceil to floor, add a +n padding distance
 function measureEmpty(x,y,dx,dy,width,length,map){
-    let x1 = x + dx - Math.ceil(0.5*width); // ceil: one tile padding to left
-    let x2 = x + dx + Math.ceil(0.5*width); // ceil: one tile padding to right
-    let y1 = y + dy;
+    let p = 1;                                  // how many tiles of padding around the module
+    let x1 = x + dx - (Math.floor(0.5*width)+p); 
+    let x2 = x + dx + (Math.floor(0.5*width)+p); 
+    let y1 = y + dy;                            // y1 is one tile adjacent to parent connection port
     let j;
 
-    // this assumes dx,dy will be 
-    // +1 or -1 in one direction, 
-    // and 0 in the other eg: (1,0); (0,-1)
-    // TODO: this switch() system is sort of BS, 
-    // should be more elegant way to write this 
-    // as a more universal transformation.  cases are all similar equations..
-    switch (dx){
-        case 0: // top or bottom facing port
-        switch (dy){
-            case -1: // top facing
-                for(j=y1;j>=y1-(length+1);j--){ // one tile padding to y
-                    for(let i=x1;i<=x2;i++){
-                        if (map.getTile(i,j).constructor.name !== "Space"){
-                        //if (map.tiles[i][j].constructor.name !== "Space"){
-                            return y1-j;
-                        }
-                    }
+
+    // TODO:
+    // add some sort of x/col flip for this to handle horizontal cases
+    function measure(r1,c1,dr,dc){
+        for (var row = 0; Math.abs(row) < length+(2*p); row=row+dr) {
+            for (let col = 0; col < width+(2*p); col=col+dc) {
+                if (map.getTile(c1+col,r1+row).constructor.name !== "Space"){
+                    return Math.abs(row);
                 }
-                return y1-j;
-                break;
-            case 1: // bottom facing
-                for(j=y1;j<=y1+length+1;j++){ // one tile padding to y
-                    for(let i=x1;i<=x2;i++){
-                        if (map.getTile(i,j).constructor.name !== "Space"){
-                        //if (map.tiles[i][j].constructor.name !== "Space"){
-                            return j-y1;
-                        }
-                    }
-                }
-                return j-y1;
-                break;
-            default: console.log("invalid dy value "+dy);
+            }
         }
-        case -1: // left facing port
-            // not sure how I'm going to transform horizontal modules, 
-            // might rotate vertical modules such that length is x so they keep 
-            // universal length/width paramaters
-            // or might make a different horizontal module class
-            return 0; // placeholder to disable horizontal module attempts
-            break;
-        case 1: // right facing port
-            // do stuff
-            return 0; // placeholder to disable horizontal module attempts
-            break;
-        default: console.log("invalid dx value "+dx);
+        return Math.abs(row);// i feel like this shoudl have a +1 but it works this way :(
     }
+
+    if (dx===0){                    // top or bottom facing port
+        return measure(y1,x1,dy,1);       // for dy==1¦¦dy==-1
+
+    }else{                          // right or left facing port
+        return measure(x1,y1,dx,1);       // for dx==1¦¦dx==-1
+                                    // this isnt actually going to work
+                                    // TODO: solve transform for horizontal modules
+    };
+
 }
+
 
 
 
@@ -340,6 +321,8 @@ function generateStation(mapWidth, mapHeight){
     // had to make station global so that new modules could check it for space
     // TODO: learn to better scope variables
     station = new GameMap(xTiles, yTiles);  // may want this to persist outside of this function, not sure
+                                            // TODO: make this function local
+                                            // will need to pass map to module constructor
 
     // couldnt figure out how to pass this, had to make it global :(
     // TODO: fix
