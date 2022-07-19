@@ -427,6 +427,24 @@ function generateStation(mapWidth, mapHeight){
         }
     };
 
+    function placeNPCs(){
+        for (let i=0;i<dockList.length;i++){
+            let mod=dockList[i].module;
+            let port=dockList[i].port;
+            npc[i] = new Actor(
+                modules[mod].ports[port].x + modules[mod].ports[port].dx,
+                modules[mod].ports[port].y + modules[mod].ports[port].dy,
+                "\u03a6",
+                0,0,0,0,
+                false
+            );
+            npc[i].color = paint();
+            station.entities.push(npc[i]);
+        };
+    }
+
+    placeNPCs();
+    
     return station;
 }
 

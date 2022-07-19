@@ -37,10 +37,6 @@ function game(){
 
     gameMap = generateStation(xTiles,yTiles);
 
-    // I think this should be done within map generation its self,
-    // but I stuck it here as a kleudge
-    // TODO: improve
-    gameMap.placeNPCs();
 
     let playerStart = gameMap.getRandomClearTile();
     player = new Actor(playerStart.x, playerStart.y, "@", 255,255,255,1,/*"#ffffff",*/ false);

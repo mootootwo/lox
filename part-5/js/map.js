@@ -36,21 +36,7 @@ class GameMap {
         return this.tiles;
     }
 
-    placeNPCs(){
-        for (let i=0;i<dockList.length;i++){
-            let mod=dockList[i].module;
-            let port=dockList[i].port;
-            npc[i] = new Actor(
-                modules[mod].ports[port].x + modules[mod].ports[port].dx,
-                modules[mod].ports[port].y + modules[mod].ports[port].dy,
-                "\u03a6",
-                0,0,0,0,
-                false
-            );
-            npc[i].color = paint();
-            gameMap.entities.push(npc[i]);
-        };
-    }
+
 
     // all tiles in visibile array default to false
     // visible[] and shadow[] could probably be one thing?
