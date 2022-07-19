@@ -12,6 +12,7 @@ class Entity{
         this.s = 1; // experimental shader, multiplies rgb values
         this.color = this.concatRGBA(r,g,b,a,this.s);
         this.passable = passable;
+        this.name = this.constructor.name;
 	}
 
     // not sure this should live here..
@@ -106,14 +107,18 @@ class Actor extends Entity{
         // passable squares to be 
         // moved to engine.js
         if( gameMap.inBounds(this.x+dx, this.y+dy) && gameMap.tiles[this.x+dx][this.y+dy].passable===true) {
-            this.x += dx;
-            this.y += dy;
+            
+            //test for blocking entity
+            let blocker = gameMap.getBlockingEntity(this.x+dx,this.y+dy);
+            if (blocker){
+                console.log("booped "+blocker.name)
+            }else{
+                this.x += dx;
+                this.y += dy;
+            }
         };
-
-        //if(this==player){
-        //    this.updateFOV();
-        //}
     }
+    
 }
 
 // not sure that this is strictly necessary

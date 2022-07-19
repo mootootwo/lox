@@ -76,6 +76,22 @@ class GameMap {
         }
     }
 
+    // runs through entity list and checks for blocking entites at a given location
+    // only returns first one found
+    // assumes there would only be one generated at a location
+    // TODO: improve this
+    getBlockingEntity(x,y){
+        
+        for (let i=0; i<this.entities.length; i++){
+            if (x===this.entities[i].x&&y===this.entities[i].y){
+                if (this.entities[i].passable===false){
+                    return this.entities[i];
+                }
+            }
+        }
+        return null;
+    }
+
     // returns a clear Space tile
     getRandomClearTile(){
         let x=randomRange(0,this.width);

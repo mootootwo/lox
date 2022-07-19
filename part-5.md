@@ -25,8 +25,8 @@ I used the Phi character `Φ` because it's low-res representation looks like a l
 -x create a place for NPCs to spawn (this will be docking ports)
 -- add function to get random unblocked docking port
 --x add function to get random free tile (for player placement)
-- add blocksMovement ability to NPCs
-- add name to NPCs?
+-x add blocksMovement ability to NPCs (not needed because entites already include "passable" since entities include tiles)
+- add name to NPCs? (tabling this for later)
 - don't know WTF tcod factories do.  hopefully not important.
 - update movement to check if the space being moved to is blocked
 -- tutorial suggests changing movement action to action with direction
