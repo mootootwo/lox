@@ -18,10 +18,10 @@ I wanted to get some NPCs spawinging and I was in a bit of a hurry.  So, instead
 I used the Phi character `Φ` because it's low-res representation looks like a little tie-fighter and I thought it was a decent space ship.  I think I originally saw that idea on some ancient DOS game.  I also wrote the worlds worst Standard Deviation algorithm to give each one a random vivid (not greyish) paint job.  I'm much more proud of this than I have any right to be.
 
 ### Stuff
-- move entites so they are stored on the map class
+-x move entites so they are stored on the map class
 - move entity rendering loop (not entity.draw()) to map class
 - test if entity is on a visible tile before drawing
-- make sure that player is passed into entities list
+-x make sure that player is passed into entities list
 -x create a place for NPCs to spawn (this will be docking ports)
 -- add function to get random unblocked docking port
 --x add function to get random free tile (for player placement)

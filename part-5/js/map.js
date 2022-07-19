@@ -14,10 +14,10 @@ not sure, but trying it for now
 // but should be fixed to be locally scoped
 // that isnt working however
 class GameMap {
-    constructor(width, height, entities){
+    constructor(width, height){
         this.width = width;
         this.height = height;
-        this.entities = entities;
+        this.entities = [];
         this.tiles = this.generateMap(this.width, this.height);
         this.visible = this.initVisible(this.width, this.height);
         this.shadow = this.initShadow(this.width, this.height);
@@ -34,6 +34,22 @@ class GameMap {
             }
         }
         return this.tiles;
+    }
+
+    placeNPCs(){
+        for (let i=0;i<dockList.length;i++){
+            let mod=dockList[i].module;
+            let port=dockList[i].port;
+            npc[i] = new Actor(
+                modules[mod].ports[port].x + modules[mod].ports[port].dx,
+                modules[mod].ports[port].y + modules[mod].ports[port].dy,
+                "\u03a6",
+                0,0,0,0,
+                false
+            );
+            npc[i].color = paint();
+            gameMap.entities.push(npc[i]);
+        };
     }
 
     // all tiles in visibile array default to false

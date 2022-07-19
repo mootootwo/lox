@@ -33,33 +33,19 @@ function game(){
 
 
 
-    entities = [];
     npc = [];
 
-    //gameMap = new GameMap(xTiles, yTiles);
-    gameMap = generateStation(xTiles,yTiles,entities);
+    gameMap = generateStation(xTiles,yTiles);
+
+    // I think this should be done within map generation its self,
+    // but I stuck it here as a kleudge
+    // TODO: improve
+    gameMap.placeNPCs();
 
     let playerStart = gameMap.getRandomClearTile();
     player = new Actor(playerStart.x, playerStart.y, "@", 255,255,255,1,/*"#ffffff",*/ false);
     player.updateFOV();
-    entities.push(player);
-
-    for (let i=0;i<dockList.length;i++){
-        let mod=dockList[i].module;
-        let port=dockList[i].port;
-        npc[i] = new Actor(
-            modules[mod].ports[port].x + modules[mod].ports[port].dx,
-            modules[mod].ports[port].y + modules[mod].ports[port].dy,
-            "\u03a6",
-            0,0,0,0,
-            false
-        );
-        npc[i].color = paint();
-        entities.push(npc[i]);
-    };
-       //npc = new Actor(player.x+5, player.y+5, "&", 255,0,255,1,/*"#ff00ff",*/ false);
-    
-    //entities = [player, npc];
+    gameMap.entities.push(player);
 
     engine = new Engine();
 
