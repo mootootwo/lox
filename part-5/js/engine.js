@@ -9,13 +9,8 @@ class Engine {
     // to receive event classes
     // havent figured that out
 
-    // entities[] is globally scoped 
-    // so doesnt strictly need to be passed here
-    // but should be fixed to be locally scoped
-    // that isnt working however
-    // similarly gameMap[] should be passed to this
-    constructor(entities){
-        this.entities = entities;
+    // should gameMap[] be passed to this?
+    constructor(){
 	}
 
     // not totally convinced moving this out of 
@@ -23,8 +18,8 @@ class Engine {
     render(){
         ctx.clearRect(0,0,canvas.width,canvas.height); // clear screen each frame
         gameMap.draw();
-        for (let i = 0; i < this.entities.length; i++){ // draws each entity
-            this.entities[i].draw();
+        for (let i = 0; i < gameMap.entities.length; i++){ // draws each entity
+            gameMap.entities[i].draw();
         }
     }
 

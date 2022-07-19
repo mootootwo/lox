@@ -365,7 +365,7 @@ function mergeModule(map,module){
 // merges those modules onto the map
 // returns the completed map
 // TODO: consider changing this to a class
-function generateStation(mapWidth, mapHeight){
+function generateStation(mapWidth, mapHeight, entities){
     modules = []; // can make this local.. but may need it externally later to transform modules
     const maxModules = 5;
     const minModules = 3;
@@ -376,7 +376,7 @@ function generateStation(mapWidth, mapHeight){
 
     // had to make station global so that new modules could check it for space
     // TODO: learn to better scope variables
-    station = new GameMap(xTiles, yTiles);  // may want this to persist outside of this function, not sure
+    station = new GameMap(xTiles, yTiles, entities);  // may want this to persist outside of this function, not sure
                                             // TODO: make this function local
                                             // will need to pass map to module constructor
 

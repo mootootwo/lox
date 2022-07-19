@@ -9,10 +9,15 @@ tutorial wants the map to be a class...
 not sure, but trying it for now
 */
 
+// entities[] is globally scoped 
+// so doesnt strictly need to be passed here
+// but should be fixed to be locally scoped
+// that isnt working however
 class GameMap {
-    constructor(width, height){
+    constructor(width, height, entities){
         this.width = width;
         this.height = height;
+        this.entities = entities;
         this.tiles = this.generateMap(this.width, this.height);
         this.visible = this.initVisible(this.width, this.height);
         this.shadow = this.initShadow(this.width, this.height);

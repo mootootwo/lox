@@ -31,11 +31,13 @@ function game(){
     //let playerX = Math.floor(xTiles/2);
     //let playerY = Math.floor(yTiles/2);
 
-    //gameMap = new GameMap(xTiles, yTiles);
-    gameMap = generateStation(xTiles,yTiles);
+
 
     entities = [];
     npc = [];
+
+    //gameMap = new GameMap(xTiles, yTiles);
+    gameMap = generateStation(xTiles,yTiles,entities);
 
     let playerStart = gameMap.getRandomClearTile();
     player = new Actor(playerStart.x, playerStart.y, "@", 255,255,255,1,/*"#ffffff",*/ false);
@@ -59,7 +61,7 @@ function game(){
     
     //entities = [player, npc];
 
-    engine = new Engine(entities);
+    engine = new Engine();
 
     async function render() {           // chained async.. seems like bullshit
         await setupCanvas();            // this loads font, sets up canvas and contex.  async function

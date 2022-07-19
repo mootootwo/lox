@@ -59,7 +59,7 @@ async function setupCanvas(){
     ctx.textBaseline = "top";
     ctx.imageSmoothingEnabled = false;
     ctx.scale(scale, scale); // Normalize coordinate system to use CSS pixels. WTF ever that means.
-    //ctx.translate(0.5,0.5); // improve anti-aliasing blur by shifting rendering by half pixel
+    ctx.translate(0.5,0.5); // improve anti-aliasing blur by shifting rendering by half pixel
 
     return;
 }
