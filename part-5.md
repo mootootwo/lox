@@ -17,35 +17,28 @@ I wanted to get some NPCs spawinging and I was in a bit of a hurry.  So, instead
 
 I used the Phi character `Φ` because it's low-res representation looks like a little tie-fighter and I thought it was a decent space ship.  I think I originally saw that idea on some ancient DOS game.  I also wrote the worlds worst Standard Deviation algorithm to give each one a random vivid (not greyish) paint job.  I'm much more proud of this than I have any right to be.
 
-### Stuff
--x move entites so they are stored on the map class
+### Entity Updates
+As the tutorial suggested, I managed to move these into the GameMap class and things seem to be good in that regard.
+
+Instead of assigning a name to them when they are constructed, I allowed Entities to inherit their constructor name for now.  It will be simple to extend this to support custom names, but this works.
+
+I did not need to add a `blocksMovement` type property to Actors, since they already share a class with Tiles and they already have the `passable` property.
+
+### Movement
+I am not happy with cycling through the entity list looking for impassable entities, but I followed that part of the tutorial and implemented it.
+
+It seems sloppy, and I can imagine that I might have multiple blocking entites per tile in some edge cases.  I'm over my time budget for this week though, so I've just noted it down as something to do better next time.
+
+### Misc stuff
+A bunch of things I didn't do that I wanted to:
 - move entity rendering loop (not entity.draw()) to map class
 - test if entity is on a visible tile before drawing
--x make sure that player is passed into entities list
--x create a place for NPCs to spawn (this will be docking ports)
--- add function to get random unblocked docking port
---x add function to get random free tile (for player placement)
--x add blocksMovement ability to NPCs (not needed because entites already include "passable" since entities include tiles)
-- add name to NPCs? (tabling this for later)
-- don't know WTF tcod factories do.  hopefully not important.
-- update movement to check if the space being moved to is blocked
--- tutorial suggests changing movement action to action with direction
---- movement and bumping would be different actions as children of the directional action
--- identify bumping of NPCs and trigger something
+- add function to get random unblocked docking port
+- tutorial suggests changing movement action to action with direction
+-- movement and bumping would be different actions as children of the directional action
 -- want to also identify bumping of walls.  tutorial does this with a bump action that determines if we have a wall bump or a melee bump.
 - add something into the engine for the game loop to include NPC turns (lol)
-
-
-
-
-
 - want to have ticks and spawn NPCs every n ticks
--x want to colorize NPCs randomly
 - want to assign different movement algorithms to NPCs 
-
-
-
-
-
 
 ## [Demo](https://mootootwo.github.io/lox/part-5/)
